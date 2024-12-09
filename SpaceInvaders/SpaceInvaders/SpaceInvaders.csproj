@@ -1,0 +1,75 @@
+<Project Sdk="Uno.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>
+      net8.0-windows10.0.19041;
+    </TargetFrameworks>
+
+    <OutputType>Exe</OutputType>
+    <UnoSingleProject>true</UnoSingleProject>
+
+    <!-- Display name -->
+    <ApplicationTitle>SpaceInvaders</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>com.companyname.SpaceInvaders</ApplicationId>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <!--
+      If you encounter this error message:
+
+        error NETSDK1148: A referenced assembly was compiled using a newer version of Microsoft.Windows.SDK.NET.dll.
+        Please update to a newer .NET SDK in order to reference this assembly.
+
+      This means that the two packages below must be aligned with the "build" version number of
+      the "Microsoft.Windows.SDK.BuildTools" package above, and the "revision" version number
+      must be the highest found in https://www.nuget.org/packages/Microsoft.Windows.SDK.NET.Ref.
+    -->
+    <!-- <WindowsSdkPackageVersion>10.0.22621.28</WindowsSdkPackageVersion> -->
+
+    <!--
+      UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
+      https://aka.platform.uno/singleproject-features
+    -->
+    <UnoFeatures>
+      Lottie;
+      Hosting;
+      Toolkit;
+      Logging;
+      Mvvm;
+      Configuration;
+      Navigation;
+    </UnoFeatures>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Presentation\MainPage.xaml" />
+    <None Remove="Presentation\Shell.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Presentation\MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Remove="Presentation\MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Presentation\Shell.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Remove="Presentation\Shell.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Documents\Scores.json" />
+    <None Remove="Assets\Documents\scores.json" />
+    <Content Include="Assets\Documents\scores.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Presentation\ContentDialogSaveScore.xaml">
+      <IsDefaultItem>true</IsDefaultItem>
+    </Page>
+  </ItemGroup>
+
+</Project>

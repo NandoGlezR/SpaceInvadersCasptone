@@ -1,0 +1,94 @@
+﻿<Page
+  x:Class="SpaceInvaders.Presentation.GamePage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:viewModel="using:SpaceInvaders.ViewModels"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  KeyDown="KeyDownPlayer"
+  mc:Ignorable="d"
+  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Page.DataContext>
+    <viewModel:GameViewModel />
+  </Page.DataContext>
+  <Grid>
+    <Image Source="ms-appx:///Assets/Textures/Background.jpeg" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+    <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="800" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <TextBlock Grid.Column="0">
+      <Run Text="Score:"/>
+      <Run Text="{Binding CollisionController.ScoreTotal}"/>
+    </TextBlock>
+    <TextBlock Grid.Column="2">
+      <Run Text="Lives:"/>
+      <Run Text="{Binding Player.Lives}"/>
+    </TextBlock>
+    <Canvas Grid.Column="1">
+      <Image Source="{Binding Player.Texture}"
+                 Height="{Binding Player.Height}"
+                 Width="{Binding Player.Width}"
+                 Canvas.Left="{Binding Player.PositionX}"
+                 Canvas.Top="{Binding Player.PositionY}" />
+
+      <Ellipse Fill="Blue"
+               Width="{Binding ProjectileController.Projectile.Radius}"
+               Height="{Binding ProjectileController.Projectile.Radius}"
+               Canvas.Left="{Binding ProjectileController.Projectile.PositionX}"
+               Canvas.Top="{Binding ProjectileController.Projectile.PositionY}"
+               Visibility="{Binding ProjectileController.Projectile.IsFired, Converter={StaticResource NullToVisibilityConverter}}" />
+
+      <Image Source="{Binding EnemyController.SupremeShip.Texture}"
+             Width="{Binding EnemyController.SupremeShip.Width}"
+             Height="{Binding EnemyController.SupremeShip.Height}"
+             Canvas.Left="{Binding EnemyController.SupremeShip.PositionX}"
+             Canvas.Top="{Binding EnemyController.SupremeShip.PositionY}"
+        />
+      <ItemsControl ItemsSource="{Binding EnemyController.Enemies}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Canvas>
+              <Image Source="{Binding Texture}"
+                         Width="{Binding Width}"
+                         Height="{Binding Height}"
+                         Canvas.Left="{Binding PositionX}"
+                         Canvas.Top="{Binding PositionY}" />
+            </Canvas>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <ItemsControl ItemsSource="{Binding EnemyProjectileController.EnemyProjectile}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Canvas>
+              <Ellipse Fill="Red"
+                         Width="{Binding Radius}"
+                         Height="{Binding Radius}"
+                         Canvas.Left="{Binding PositionX}"
+                         Canvas.Top="{Binding PositionY}" />
+            </Canvas>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <ItemsControl ItemsSource="{Binding ProtectionController.ProtectionBlockCollection}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Canvas>
+              <Rectangle Fill="Green"
+                         Width="{Binding Width }"
+                         Height="{Binding Height}"
+                         Canvas.Left="{Binding PositionX}"
+                         Canvas.Top="{Binding PositionY}"/>
+            </Canvas>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Canvas>
+  </Grid>
+  </Grid>
+</Page>

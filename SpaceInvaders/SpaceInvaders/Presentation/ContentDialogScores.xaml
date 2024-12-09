@@ -1,0 +1,35 @@
+﻿<ContentDialog
+  x:Class="SpaceInvaders.Presentation.ContentDialogScores"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:viewModel="using:SpaceInvaders.ViewModels"
+  Title="Scores display"
+  Style="{ThemeResource DefaultContentDialogStyle}"
+  PrimaryButtonText="Close">
+  <ContentDialog.DataContext>
+    <viewModel:ScoresViewModel />
+  </ContentDialog.DataContext>
+  <Grid RowSpacing="10">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <TextBlock Grid.Row="0" Text="Her you will see the players who have participated" />
+    <TextBlock Grid.Row="1" Text="and saved their heroic deeds."/>
+    <ScrollViewer Grid.Row="2">
+      <ListView ItemsSource="{Binding ScoreCollection}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Foreground="Green" FontSize="20">
+              <Run Text="{Binding PlayerName}" />
+              <Run Text=":"></Run>
+              <Run Text="{Binding Score}" />
+            </TextBlock>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </ScrollViewer>
+  </Grid>
+</ContentDialog>
